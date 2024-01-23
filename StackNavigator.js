@@ -7,11 +7,13 @@ import SearchScreen from "./screens/SearchScreen";
 import LoginScreen from "./screens/LoginScreen";
 import SignupScreen from "./screens/SignupScreen";
 import OnboardingScreen from "./screens/OnboardingScreen";
+import ArtistSelectionScreen from "./screens/ArtistSelectionScreen";
 import { Entypo } from "@expo/vector-icons";
 import { AntDesign } from "@expo/vector-icons";
 import { SimpleLineIcons } from "@expo/vector-icons";
 import { MaterialIcons } from "@expo/vector-icons";
 import { Feather } from "@expo/vector-icons";
+import { Ionicons } from "@expo/vector-icons";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { NavigationContainer } from "@react-navigation/native";
 
@@ -42,13 +44,14 @@ function BottomTabs() {
         component={HomeScreen}
         options={{
           tabBarLabel: "Home",
+          tabBarShowLabel: false,
           headerShown: false,
           tabBarLabelStyle: "white",
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Entypo name="home" size={24} color="#966fdc" />
+              <Ionicons name="home" size={24} color="#966fdc" />
             ) : (
-              <AntDesign name="home" size={24} color="white" />
+              <Ionicons name="home-outline" size={24} color="white" />
             ),
         }}
       />
@@ -57,6 +60,7 @@ function BottomTabs() {
         component={PlaylistScreen}
         options={{
           tabBarLabel: "Playlist",
+          tabBarShowLabel: false,
           headerShown: false,
           tabBarLabelStyle: "white",
           tabBarIcon: ({ focused }) =>
@@ -72,6 +76,7 @@ function BottomTabs() {
         component={LibraryScreen}
         options={{
           tabBarLabel: "Libary",
+          tabBarShowLabel: false,
           headerShown: false,
           tabBarLabelStyle: "white",
           tabBarIcon: ({ focused }) =>
@@ -87,6 +92,7 @@ function BottomTabs() {
         component={SearchScreen}
         options={{
           tabBarLabel: "Search",
+          tabBarShowLabel: false,
           headerShown: false,
           tabBarLabelStyle: "white",
           tabBarIcon: ({ focused }) =>
@@ -112,9 +118,15 @@ function Navigation() {
           component={OnboardingScreen}
           options={{ headerShown: false }}
         />
+
         <Stack.Screen
           name="Signup"
           component={SignupScreen}
+          options={{ headerShown: false }}
+        />
+        <Stack.Screen
+          name="Artist Selection"
+          component={ArtistSelectionScreen}
           options={{ headerShown: false }}
         />
         <Stack.Screen
