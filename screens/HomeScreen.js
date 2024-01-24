@@ -14,15 +14,12 @@ import RecentReleaseComponent from "../components/RecentReleaseComponent";
 import LatestAlbumsComponent from "../components/LatestAlbumsComponent";
 import artistsData from "../data";
 
-// Utility function to get random artists
 const getRandomArtists = (artists, numberOfArtists) => {
   return [...artists].sort(() => 0.5 - Math.random()).slice(0, numberOfArtists);
 };
 
 const HomeScreen = () => {
   const numberOfArtistsToShow = 5;
-
-  // Get random artists for Featured Artists and Recent Releases
   const featuredArtists = getRandomArtists(artistsData, numberOfArtistsToShow);
   const recentReleases = getRandomArtists(artistsData, numberOfArtistsToShow);
   const latestAlbums = getRandomArtists(artistsData, numberOfArtistsToShow);
@@ -42,7 +39,10 @@ const HomeScreen = () => {
             <Text style={styles.headerBtnText}>Singles</Text>
           </TouchableOpacity>
         </View>
-        <ScrollView style={styles.scrollView}>
+        <ScrollView
+          style={styles.scrollView}
+          contentContainerStyle={{ paddingBottom: 150 }}
+        >
           <Text style={styles.sectionTitle}>Artistes En Vedette</Text>
           <FlatList
             data={featuredArtists}
@@ -64,13 +64,13 @@ const HomeScreen = () => {
             showsHorizontalScrollIndicator={false}
             style={styles.recentReleasesList}
           />
-          <Text style={styles.sectionTitle}>Latest Albums</Text>
+          <Text style={styles.sectionTitle}>Albums Recents</Text>
           <FlatList
             data={latestAlbums}
             renderItem={({ item }) => (
               <LatestAlbumsComponent spotifyId={item.spotifyId} />
             )}
-            keyExtractor={(item) => item.id.toString()} // Assuming each album has a unique 'id'
+            keyExtractor={(item) => item.id.toString()}
             horizontal={true}
             showsHorizontalScrollIndicator={false}
           />
