@@ -81,4 +81,30 @@ async function getArtistName(artistId) {
   }
 }
 
-module.exports = { getArtistData, getLatestRelease, getArtistName };
+async function getLatestAlbums(artistId) {
+  const accessToken = await getAccessToken();
+
+  try {
+    const response = await axios.get(
+      `https://api.spotify.com/v1/artists/${artistId}/albums`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        params: { include_groups: "album", limit: 1 }, // Fetching albums specifically
+      }
+    );
+    const latestAlbum = response.data.items[0]; // Assuming the first item is the latest album
+    return {
+      name: latestAlbum.name,
+      image: latestAlbum.images[0].url, // Taking the first image as the album cover
+    };
+  } catch (error) {
+    console.error("Error fetching latest albums:", error);
+    return null;
+  }
+}
+module.exports = {
+  getArtistData,
+  getLatestRelease,
+  getArtistName,
+  getLatestAlbums,
+};

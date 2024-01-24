@@ -1,18 +1,17 @@
-// RecentReleaseComponent.js
+// LatestAlbumsComponent.js
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { getLatestRelease } from "../SpotifyData"; // Function to fetch the latest release
-import artistsData from "../data"; // Assuming this is the path to your artists data
+import { getLatestAlbums } from "../SpotifyData"; // Function to fetch the latest albums
+import artistsData from "../data";
 
-const RecentReleaseComponent = ({ spotifyId }) => {
-  const [latestRelease, setLatestRelease] = useState(null);
+const LatestAlbumsComponent = ({ spotifyId }) => {
+  const [latestAlbum, setLatestAlbum] = useState(null);
   const [artist, setArtist] = useState(null);
 
   useEffect(() => {
-    getLatestRelease(spotifyId)
-      .then((release) => {
-        setLatestRelease(release);
-        // Find the artist's details from artistsData
+    getLatestAlbums(spotifyId)
+      .then((album) => {
+        setLatestAlbum(album);
         const artistDetails = artistsData.find(
           (artist) => artist.spotifyId === spotifyId
         );
@@ -21,21 +20,21 @@ const RecentReleaseComponent = ({ spotifyId }) => {
       .catch((err) => console.log(err));
   }, [spotifyId]);
 
-  if (!latestRelease || !artist) {
+  if (!latestAlbum || !artist) {
     return <Text>Loading...</Text>;
   }
 
   return (
     <View style={styles.container}>
       <TouchableOpacity>
-        <Image source={{ uri: latestRelease.image }} style={styles.image} />
+        <Image source={{ uri: latestAlbum.image }} style={styles.image} />
       </TouchableOpacity>
       <Text
         numberOfLines={1}
         ellipsizeMode="tail"
-        style={styles.recentReleaseTxt}
+        style={styles.latestAlbumTxt}
       >
-        {latestRelease.name}
+        {latestAlbum.name}
       </Text>
       <Text numberOfLines={1} ellipsizeMode="tail" style={styles.artistTxt}>
         {artist.name}
@@ -56,7 +55,7 @@ const styles = StyleSheet.create({
     marginBottom: 10,
     marginTop: 15,
   },
-  recentReleaseTxt: {
+  latestAlbumTxt: {
     fontSize: 15,
     color: "white",
     fontWeight: "bold",
@@ -68,4 +67,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default RecentReleaseComponent;
+export default LatestAlbumsComponent;

@@ -6,10 +6,12 @@ import {
   SafeAreaView,
   TouchableOpacity,
   FlatList,
+  ScrollView,
 } from "react-native";
 import { LinearGradient } from "expo-linear-gradient";
 import ArtistComponent from "../components/ArtistComponent";
 import RecentReleaseComponent from "../components/RecentReleaseComponent";
+import LatestAlbumsComponent from "../components/LatestAlbumsComponent";
 import artistsData from "../data";
 
 // Utility function to get random artists
@@ -23,6 +25,7 @@ const HomeScreen = () => {
   // Get random artists for Featured Artists and Recent Releases
   const featuredArtists = getRandomArtists(artistsData, numberOfArtistsToShow);
   const recentReleases = getRandomArtists(artistsData, numberOfArtistsToShow);
+  const latestAlbums = getRandomArtists(artistsData, numberOfArtistsToShow);
 
   return (
     <LinearGradient style={styles.container} colors={["#000814", "#231942"]}>
@@ -39,28 +42,39 @@ const HomeScreen = () => {
             <Text style={styles.headerBtnText}>Singles</Text>
           </TouchableOpacity>
         </View>
+        <ScrollView style={styles.scrollView}>
+          <Text style={styles.sectionTitle}>Artistes En Vedette</Text>
+          <FlatList
+            data={featuredArtists}
+            renderItem={({ item }) => <ArtistComponent artist={item} />}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={styles.featuredArtistsList}
+          />
 
-        <Text style={styles.sectionTitle}>Artistes En Vedette</Text>
-        <FlatList
-          data={featuredArtists}
-          renderItem={({ item }) => <ArtistComponent artist={item} />}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={styles.featuredArtistsList}
-        />
-
-        <Text style={styles.sectionTitle}>Nouveaux singles</Text>
-        <FlatList
-          data={recentReleases}
-          renderItem={({ item }) => (
-            <RecentReleaseComponent spotifyId={item.spotifyId} />
-          )}
-          keyExtractor={(item) => item.id}
-          horizontal={true}
-          showsHorizontalScrollIndicator={false}
-          style={styles.recentReleasesList}
-        />
+          <Text style={styles.sectionTitle}>Nouveaux singles</Text>
+          <FlatList
+            data={recentReleases}
+            renderItem={({ item }) => (
+              <RecentReleaseComponent spotifyId={item.spotifyId} />
+            )}
+            keyExtractor={(item) => item.id}
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+            style={styles.recentReleasesList}
+          />
+          <Text style={styles.sectionTitle}>Latest Albums</Text>
+          <FlatList
+            data={latestAlbums}
+            renderItem={({ item }) => (
+              <LatestAlbumsComponent spotifyId={item.spotifyId} />
+            )}
+            keyExtractor={(item) => item.id.toString()} // Assuming each album has a unique 'id'
+            horizontal={true}
+            showsHorizontalScrollIndicator={false}
+          />
+        </ScrollView>
       </SafeAreaView>
     </LinearGradient>
   );
@@ -105,9 +119,9 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginTop: 20,
   },
-  // recentReleaseTitle: {
-  //   marginTop: 10,
-  // },
+  scrollView: {
+    marginBottom: 50,
+  },
   featuredArtistsList: {},
   recentReleasesList: {},
 });

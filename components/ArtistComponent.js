@@ -4,27 +4,29 @@ import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { getArtistData } from "../SpotifyData";
 
 const ArtistComponent = ({ artist }) => {
-  const [artistImage, setArtistImage] = useState(artist.image);
+  const [artistImage, setArtistImage] = useState(artist?.image);
 
   useEffect(() => {
-    if (artist.spotifyId) {
+    if (artist?.spotifyId) {
       getArtistData(artist.spotifyId)
         .then((data) => {
-          setArtistImage(data.artist.images[0].url);
+          if (data.artist.images[0]?.url) {
+            setArtistImage(data.artist.images[0].url);
+          }
         })
         .catch((err) => console.log(err));
     }
-  }, [artist.spotifyId]);
+  }, [artist]);
 
   return (
     <View style={styles.artistContainer}>
       <TouchableOpacity>
         <Image
-          source={{ uri: artistImage }}
+          source={{ uri: artistImage || "default_image_url" }}
           style={{ width: 150, height: 150, marginBottom: 10 }}
         />
       </TouchableOpacity>
-      <Text style={styles.featuredText}>{artist.name}</Text>
+      <Text style={styles.featuredText}>{artist?.name}</Text>
     </View>
   );
 };
