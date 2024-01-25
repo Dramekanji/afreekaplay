@@ -45,7 +45,7 @@ const PlaylistScreen = () => {
     <LinearGradient style={styles.container} colors={["#000814", "#231942"]}>
       <SafeAreaView style={styles.safeArea}>
         {/* Header and other components */}
-        <Text style={styles.headerText}>Playlists</Text>
+        <Text style={styles.headerText}>PLAYLISTS</Text>
         <View style={styles.headerContainer}>
           <TouchableOpacity style={styles.headerBtn}>
             <Text style={styles.headerBtnText}>Artistes</Text>
@@ -59,7 +59,7 @@ const PlaylistScreen = () => {
         </View>
         <ScrollView
           style={styles.scrollView}
-          contentContainerStyle={{ paddingBottom: 150 }}
+          contentContainerStyle={{ paddingBottom: 50 }}
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.playlistSection}>
@@ -73,7 +73,7 @@ const PlaylistScreen = () => {
             />
           </View>
 
-          <View style={styles.playlistSection}>
+          <View>
             <Text style={styles.header}>Caribbean</Text>
             <FlatList
               horizontal
@@ -84,7 +84,7 @@ const PlaylistScreen = () => {
             />
           </View>
 
-          <View style={styles.playlistSection}>
+          <View>
             <Text style={styles.header}>Jazz</Text>
             <FlatList
               horizontal
@@ -120,6 +120,7 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "flex-start",
+    gap: 10,
     marginVertical: 15,
     marginHorizontal: 10,
   },
@@ -139,13 +140,15 @@ const styles = StyleSheet.create({
     marginHorizontal: 10,
   },
   playlistSection: {
-    marginBottom: 20,
+    marginTop: 20,
   },
   header: {
     color: "white",
     fontSize: 24,
     fontWeight: "bold",
     marginBottom: 10,
+    // marginTop: 20,
+    marginHorizontal: 15,
   },
   playlistItem: {
     width: 150, // Adjusted width
