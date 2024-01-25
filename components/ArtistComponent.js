@@ -6,6 +6,8 @@ import { getArtistData } from "../SpotifyData";
 const ArtistComponent = ({ artist }) => {
   const [artistImage, setArtistImage] = useState(artist?.image);
 
+  // Review the artist prop
+
   useEffect(() => {
     if (artist?.spotifyId) {
       getArtistData(artist.spotifyId)

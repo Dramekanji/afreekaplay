@@ -98,13 +98,103 @@ async function getLatestAlbums(artistId) {
       image: latestAlbum.images[0].url, // Taking the first image as the album cover
     };
   } catch (error) {
-    console.error("Error fetching latest albums:", error);
+    console.error("Error fetching latest albums2:", error);
     return null;
   }
 }
+
+// async function getPlaylistsByCategory(categoryId) {
+//   const accessToken = await getAccessToken();
+
+//   try {
+//     const response = await axios.get(
+//       `https://api.spotify.com/v1/browse/categories/${categoryId}/playlists`,
+//       {
+//         headers: { Authorization: `Bearer ${accessToken}` },
+//         params: {
+//           country: "US", // Change this based on the target country
+//           limit: 10, // Number of results to return
+//           offset: 0, // Starting index of the results
+//         },
+//       }
+//     );
+
+//     return response.data.playlists.items;
+//   } catch (error) {
+//     console.error(
+//       `Error fetching playlists for category ${categoryId}:`,
+//       error
+//     );
+//     return [];
+//   }
+// }
+
+async function getPlaylistsByCategory(categoryId) {
+  const accessToken = await getAccessToken();
+
+  try {
+    const response = await axios.get(
+      `https://api.spotify.com/v1/browse/categories/${categoryId}/playlists`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        params: {
+          country: "US", // Change this based on the target country
+          limit: 10, // Number of results to return
+          offset: 0, // Starting index of the results
+        },
+      }
+    );
+
+    return response.data.playlists.items;
+  } catch (error) {
+    console.error(
+      `Error fetching playlists for category ${categoryId}:`,
+      error.response || error
+    );
+    return [];
+  }
+}
+
+async function getCategories() {
+  const accessToken = await getAccessToken();
+
+  try {
+    const response = await axios.get(
+      "https://api.spotify.com/v1/browse/categories",
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+        params: {
+          limit: 50, // Adjust the limit as needed
+        },
+      }
+    );
+
+    return response.data.categories.items; // This returns an array of category objects
+  } catch (error) {
+    console.error("Error fetching categories:", error);
+    return [];
+  }
+}
+
+async function logCategoryIds() {
+  try {
+    const categories = await getCategories();
+    console.log(
+      "Spotify Categories:",
+      categories.map((category) => ({ name: category.name, id: category.id }))
+    );
+  } catch (error) {
+    console.error("Error logging category IDs:", error);
+  }
+}
+
+logCategoryIds(); // Call the function to log category IDs
+
 module.exports = {
   getArtistData,
   getLatestRelease,
   getArtistName,
   getLatestAlbums,
+  getPlaylistsByCategory,
+  getCategories,
 };

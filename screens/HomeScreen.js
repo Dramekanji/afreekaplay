@@ -56,9 +56,7 @@ const HomeScreen = () => {
           <Text style={styles.sectionTitle}>Nouveaux singles</Text>
           <FlatList
             data={recentReleases}
-            renderItem={({ item }) => (
-              <RecentReleaseComponent spotifyId={item.spotifyId} />
-            )}
+            renderItem={({ item }) => <RecentReleaseComponent artist={item} />}
             keyExtractor={(item) => item.id}
             horizontal={true}
             showsHorizontalScrollIndicator={false}

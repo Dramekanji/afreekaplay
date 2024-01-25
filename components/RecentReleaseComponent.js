@@ -1,27 +1,30 @@
 // RecentReleaseComponent.js
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
-import { getLatestRelease } from "../SpotifyData"; // Function to fetch the latest release
-import artistsData from "../data"; // Assuming this is the path to your artists data
+import { getLatestRelease } from "../SpotifyData";
+import artistsData from "../data";
 
-const RecentReleaseComponent = ({ spotifyId }) => {
+const RecentReleaseComponent = ({ artist }) => {
   const [latestRelease, setLatestRelease] = useState(null);
-  const [artist, setArtist] = useState(null);
+  const [artistDetails, setArtistDetails] = useState(null);
 
   useEffect(() => {
-    getLatestRelease(spotifyId)
+    getLatestRelease(artist.spotifyId)
       .then((release) => {
         setLatestRelease(release);
-        // Find the artist's details from artistsData
-        const artistDetails = artistsData.find(
-          (artist) => artist.spotifyId === spotifyId
+
+        const foundArtist = artistsData.find(
+          (item) => item.spotifyId === artist.spotifyId
         );
-        setArtist(artistDetails);
+        setArtistDetails(foundArtist);
       })
       .catch((err) => console.log(err));
-  }, [spotifyId]);
+  }, [artist.spotifyId]);
 
-  if (!latestRelease || !artist) {
+  if (!latestRelease || !artistDetails) {
+    return <Text>Loading...</Text>;
+  }
+  if (!latestRelease?.name || !artistDetails?.name) {
     return <Text>Loading...</Text>;
   }
 

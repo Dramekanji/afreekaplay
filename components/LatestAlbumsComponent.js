@@ -1,4 +1,3 @@
-// LatestAlbumsComponent.js
 import React, { useState, useEffect } from "react";
 import { View, Text, Image, StyleSheet, TouchableOpacity } from "react-native";
 import { getLatestAlbums } from "../SpotifyData"; // Function to fetch the latest albums
@@ -34,10 +33,10 @@ const LatestAlbumsComponent = ({ spotifyId }) => {
         ellipsizeMode="tail"
         style={styles.latestAlbumTxt}
       >
-        {latestAlbum.name}
+        {latestAlbum?.name || "Album Name Not Available"}
       </Text>
       <Text numberOfLines={1} ellipsizeMode="tail" style={styles.artistTxt}>
-        {artist.name}
+        {artist?.name || "Artist Name Not Available"}
       </Text>
     </View>
   );
