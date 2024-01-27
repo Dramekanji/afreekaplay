@@ -190,6 +190,30 @@ async function logCategoryIds() {
 
 logCategoryIds(); // Call the function to log category IDs
 
+async function getAlbumById(albumId) {
+  const accessToken = await getAccessToken();
+
+  try {
+    const response = await axios.get(
+      `https://api.spotify.com/v1/albums/${albumId}`,
+      {
+        headers: { Authorization: `Bearer ${accessToken}` },
+      }
+    );
+
+    return {
+      id: response.data.id,
+      name: response.data.name,
+      artist: response.data.artists[0].name, // Assuming there's at least one artist
+      image: response.data.images[0].url, // Taking the first image as the album cover
+      // Add additional album details you need here
+    };
+  } catch (error) {
+    console.error(`Error fetching album by ID ${albumId}:`, error);
+    return null;
+  }
+}
+
 module.exports = {
   getArtistData,
   getLatestRelease,
@@ -197,4 +221,5 @@ module.exports = {
   getLatestAlbums,
   getPlaylistsByCategory,
   getCategories,
+  getAlbumById,
 };
