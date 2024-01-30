@@ -59,7 +59,7 @@ const PlaylistScreen = () => {
         </View>
         <ScrollView
           style={styles.scrollView}
-          contentContainerStyle={{ paddingBottom: 50 }}
+          contentContainerStyle={{ paddingBottom: 200 }}
           showsVerticalScrollIndicator={false}
         >
           <View style={styles.playlistSection}>

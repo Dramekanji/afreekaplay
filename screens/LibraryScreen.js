@@ -36,11 +36,11 @@ const LibraryScreen = () => {
     <View style={styles.musicItem}>
       <TouchableOpacity style={styles.touchableArea}>
         <Image source={{ uri: item.image }} style={styles.artwork} />
-        <View style={styles.infoContainer}>
-          <Text style={styles.title}>{item.name}</Text>
-          <Text style={styles.artist}>{item.artist}</Text>
-        </View>
       </TouchableOpacity>
+      <View style={styles.infoContainer}>
+        <Text style={styles.title}>{item.name}</Text>
+        <Text style={styles.artist}>{item.artist}</Text>
+      </View>
     </View>
   );
 
